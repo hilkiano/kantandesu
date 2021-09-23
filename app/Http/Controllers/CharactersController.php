@@ -28,14 +28,14 @@ class CharactersController extends Controller
 
         if ($request->hiragana === "true") {
             $hiragana = Hiragana::whereIn('type', $type)->when($filter, function ($query) use ($filter) {
-                $query->where("LOWER(pronunciation)", "like", "LOWER(%".$filter."%)");
+                $query->where("pronunciation", "ilike", "%".$filter."%");
             })->get()->toArray();
             $characters["hiragana"] = $hiragana;
         }
         
         if ($request->katakana === "true") {
             $katakana = Katakana::whereIn('type', $type)->when($filter, function ($query) use ($filter) {
-                $query->where("LOWER(pronunciation)", "like", "LOWER(%".$filter."%)");
+                $query->where("pronunciation", "ilike", "%".$filter."%");
             })->get()->toArray();
             $characters["katakana"] = $katakana;
         }
